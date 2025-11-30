@@ -31,21 +31,19 @@ selenium-cucumber-junit-pom-factory
 │── src
 │   ├── main
 │   │   └── java
-│   │       ├── factory
-│   │       │   └── BrowserFactory.java      # Factory Pattern for WebDriver
 │   │       └── pages
-│   │           └── LoginPage.java           # Example Page Object
+│   │           └── BouletCorpPage.java           # Example Page Object
 │   │
 │   └── test
 │       └── java
 │           ├── stepDefinitions
-│           │   └── LoginSteps.java          # Cucumber step definitions
+│           │   └── BouletCorpSteps.java          # Cucumber step definitions
 │           └── runners
 │               └── TestRunner.java          # JUnit test runner
 │
 │── src/test/resources
 │   ├── features
-│   │   └── login.feature                    # Example Gherkin feature
+│   │   └── BouletCorp.feature               # Example Gherkin feature
 │   └── config.properties                    # Config file (browser, baseUrl, etc.)
 │
 │── pom.xml                                  # Maven dependencies
@@ -100,26 +98,25 @@ mvn test -Dbrowser=edge
 
 ## 🧩 Example Usage
 
-### Feature File (`login.feature`)
+### Feature File (`BouletCorp.feature`)
 
 ```gherkin
-Feature: Login functionality
+Fonctionnalité: Je souhaite verifier les widgets du site bouletcorp 
 
-  Scenario: Successful login
-    Given I am on the login page
-    When I enter valid credentials
-    And I click on the login button
-    Then I should see the dashboard
+  Scénario: Je verfie le changement de page
+    Etant donné je me rends sur le site Bouletcorp "bouletcorp.url"
+    Quand je clique sur le bouton A propos
+    Alors la page a change
+    Et les Widgets twitch octodon et instagram sont bien affiches
 ```
 
-### Step Definition (`LoginSteps.java`)
+### Step Definition (`BouletCorpSteps.java`)
 
 ```java
-@Given("I am on the login page")
-public void i_am_on_the_login_page() {
-    driver.get("https://example.com/login");
-    loginPage = new LoginPage(driver);
-}
+	@Etantdonné("je me rends sur le site Bouletcorp {string}")
+	public void jeMeRendsSurLeSiteBouletcorp(String url) {
+		seleniumUtils.get(configFileReader.getProperties(url));
+	}
 ```
 
 ---
@@ -130,7 +127,7 @@ public void i_am_on_the_login_page() {
 
 * Each page of the application has a dedicated Java class.
 * Encapsulates elements and actions to promote reusability.
-* Example: `LoginPage.java`
+* Example: `BouletCorpPage.java`
 
 ### Factory Design Pattern
 
